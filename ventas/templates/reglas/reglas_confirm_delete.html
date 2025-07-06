@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Regla</title>
+</head>
+<body>
+    <h2>¿Seguro que deseas eliminar la regla?</h2>
+    <p>ID: {{ object.id }} - Monto mínimo: {{ object.monto_minimo }} - Monto máximo: {{ object.monto_maximo }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sí, eliminar</button>
+        <a href="{% url 'reglas_list' %}">Cancelar</a>
+    </form>
+</body>
+</html>

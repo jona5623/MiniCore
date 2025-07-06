@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Vendedores</title>
+</head>
+<body>
+    <h2>Lista de Vendedores</h2>
+    <a href="{% url 'vendedor_create' %}">Crear Nuevo Vendedor</a>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+        {% for vendedor in vendedores %}
+        <tr>
+            <td>{{ vendedor.id }}</td>
+            <td>{{ vendedor.nombre }}</td>
+            <td>{{ vendedor.email }}</td>
+            <td>{{ vendedor.telefono }}</td>
+            <td>
+                <a href="{% url 'vendedor_update' vendedor.id %}">Editar</a> |
+                <a href="{% url 'vendedor_delete' vendedor.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No hay vendedores registrados.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'reglas_list' %}">Ver Reglas</a> | <a href="{% url 'ventas_list' %}">Ver Ventas</a>
+</body>
+</html>

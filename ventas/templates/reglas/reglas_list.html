@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Reglas</title>
+</head>
+<body>
+    <h2>Lista de Reglas</h2>
+    <a href="{% url 'reglas_create' %}">Crear Nueva Regla</a>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>ID</th>
+            <th>Monto Mínimo</th>
+            <th>Monto Máximo</th>
+            <th>Comisión (%)</th>
+            <th>Acciones</th>
+        </tr>
+        {% for regla in reglas %}
+        <tr>
+            <td>{{ regla.id }}</td>
+            <td>{{ regla.monto_minimo }}</td>
+            <td>{{ regla.monto_maximo }}</td>
+            <td>{{ regla.comision }}</td>
+            <td>
+                <a href="{% url 'reglas_update' regla.id %}">Editar</a> |
+                <a href="{% url 'reglas_delete' regla.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No hay reglas registradas.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'vendedor_list' %}">Ver Vendedores</a> | <a href="{% url 'ventas_list' %}">Ver Ventas</a>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Comisiones</title>
+</head>
+<body>
+    <h2>Reporte de Comisiones por Rango de Fechas</h2>
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Filtrar</button>
+    </form>
+    {% if ventas is not None %}
+        <h3>Resultados</h3>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <th>ID Venta</th>
+                <th>Vendedor</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Comisión (%)</th>
+                <th>Comisión calculada</th>
+            </tr>
+            {% for venta in ventas %}
+            <tr>
+                <td>{{ venta.id }}</td>
+                <td>{{ venta.vendedor.nombre }}</td>
+                <td>{{ venta.fecha }}</td>
+                <td>{{ venta.monto }}</td>
+                <td>{% if venta.regla %}{{ venta.regla.comision }}{% else %}-{% endif %}</td>
+                <td>
+                    {% if venta.regla %}
+                        {{ venta.monto|floatformat:2|add:"0"|floatformat:2|floatformat }} * {{ venta.regla.comision }}% =
+                        {{ venta.monto|floatformat:2|add:"0"|floatformat:2|floatformat|floatformat|add:"0"|floatformat|floatformat|add:"0"|floatformat|divisibleby:100 }}
+                        {{ venta.monto|floatformat:2|add:"0"|floatformat:2|floatformat|stringformat:"s" }}
+                        {{ venta.monto|floatformat:2|stringformat:"s" }}
+                        {{ venta.monto|floatformat:2|stringformat:"s" }}
+                        {{ venta.monto|floatformat:2|stringformat:"s" }}
+                        {% widthratio venta.monto venta.regla.comision 100 %}
+                    {% else %}-
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h4>Total Comisión en el periodo: <b>${{ total_comision|floatformat:2 }}</b></h4>
+    {% endif %}
+    <br>
+    <a href="{% url 'ventas_list' %}">Volver a ventas</a>
+</body>
+</html>
